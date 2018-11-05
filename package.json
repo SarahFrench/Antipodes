@@ -7,5 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sarah French",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "formatcoords": "^1.1.3",
+    "opn": "^5.4.0",
+    "readline-sync": "^1.4.9",
+    "request": "^2.88.0"
+  }
 }
