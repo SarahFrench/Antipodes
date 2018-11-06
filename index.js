@@ -3,6 +3,8 @@ const readline = require('readline-sync');
 const formatcoords = require('formatcoords');
 const opn = require('opn');
 
+const POSTCODE_API = 'https://api.postcodes.io/postcodes/'
+const GOOGLE_MAPS_URL = 'https://www.google.com/maps/place/'
 
 const mapBoxPublicToken = 'pk.eyJ1Ijoic2FyYWhmcmVuY2g5MiIsImEiOiJjam80bnl6eDcwMjdiM3BudzI3anl2eDQwIn0.pwbmAXblpySo7OPtIcv8Lg'
 //TODO - get static image of other side of the world using Map Box
@@ -15,6 +17,8 @@ function findAntipodes(postcodeLatLong){
     longitude (to keep it in the interval [-180; +180]).
 
     Example: (−12.345,67.890) coordinates have for antipode 12.345,−112.11
+
+    (https://www.dcode.fr/antipodal-coordinates)
     */
     let latitude = postcodeLatLong[0];
     latitude = -latitude;
@@ -43,7 +47,7 @@ function convertCoordinatesToDMS(postcodeLatLong){
 
 function findLatLong(postcode){
   let postcodeLatLong = []; //Longitude as first element, latitude as second element
-  request(`https://api.postcodes.io/postcodes/${postcode}`, (error, response, body) => { //lambda function
+  request(`${POSTCODE_API}${postcode}`, (error, response, body) => { //lambda function
 
     let postcodeInfo = JSON.parse(body);
 
@@ -57,7 +61,7 @@ function findLatLong(postcode){
 
     console.log(`You are in ${postcode}, (${postcodeLatLong[0]},${postcodeLatLong[1]}), ${antipodesDMS}`);
     console.log('Your browser is going to open and show you the exact opposite side of the world');
-    setTimeout(function(){opn(`https://www.google.com/maps/place/${antipodesDMS}`)}, 5000);
+    setTimeout(function(){opn(`${GOOGLE_MAPS_URL}${antipodesDMS}`)}, 5000);
 
     setTimeout(function(){console.log("Did you go and look? I can't figure out how to make the script stop, so press ^C to exit");}, 5500);
 
